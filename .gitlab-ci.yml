@@ -1,0 +1,15 @@
+stages:
+  - e2e
+
+e2e-tests:
+  stage: e2e
+  image: mcr.microsoft.com/playwright:v1.52.0-noble
+  script:
+    - npm ci
+    - npx playwright test
+  artifacts:
+    paths:
+      - playwright-report/
+      - test-results/
+    expire_in: 1 week
+    when: always

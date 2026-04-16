@@ -1,0 +1,36 @@
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.webapp
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+    networks:
+      - e2e-network
+
+  playwright:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    depends_on:
+      webapp:
+        condition: service_healthy
+    environment:
+      - BASE_URL=http://webapp:3000
+    ipc: host
+    init: true
+    volumes:
+      - ./tests:/app/tests
+      - ./playwright.config.ts:/app/playwright.config.ts
+      - ./test-results:/app/test-results
+      - ./playwright-report:/app/playwright-report
+    networks:
+      - e2e-network
+
+networks:
+  e2e-network:
+    driver: bridge

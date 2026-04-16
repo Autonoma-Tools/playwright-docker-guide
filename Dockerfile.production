@@ -1,0 +1,25 @@
+# Stage 1: Install dependencies
+FROM mcr.microsoft.com/playwright:v1.52.0-noble AS deps
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+
+RUN npm ci
+
+# Stage 2: Run tests as non-root user
+FROM mcr.microsoft.com/playwright:v1.52.0-noble AS runner
+
+WORKDIR /app
+
+# Copy installed dependencies from the deps stage
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy project files
+COPY . .
+
+# Switch to the built-in non-root user provided by the Playwright image
+USER pwuser
+
+# Run Playwright tests
+CMD ["npx", "playwright", "test"]

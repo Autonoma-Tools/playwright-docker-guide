@@ -1,0 +1,13 @@
+{
+  "name": "playwright-docker-guide",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.52.0"
+  }
+}
