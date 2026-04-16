@@ -1,9 +1,0 @@
-{
-  "version": 1,
-  "slug": "playwright-docker-guide",
-  "step": "deps_written",
-  "completed_specs": ["dockerfile-basic", "dockerfile-prod", "docker-compose", "gh-actions-workflow", "gitlab-ci-config", "debug-in-container"],
-  "pending_specs": [],
-  "created_at": "2026-04-16T00:00:00Z",
-  "updated_at": "2026-04-16T00:00:00Z"
-}
